@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>index</title>
+    <link href="CSS_styles/main.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+
+<body>
+<div id="root">
+    <div class="Dashboard fullscreen dark">
+        <div class="Background">
+            <div class="fullscreen" style="background-color: black; opacity: 1; transition: opacity 200ms ease-in-out 0s;">
+                <div class="Image fullscreen" style="background-image: url(background.jpg);"></div>
+            </div>
+        </div>
+        <div class="Widgets fullscreen">
+            <div class="container">
+                <div class="Slot middleCentre">
+                    <div class="Widget " style="font-size: 24px;">
+                        <div class="Greeting">
+                            <h2>欢迎！</h2>
+                        </div>
+                    </div>
+                    <div class="Widget " style="font-size: 24px;">
+                        <form class="Search"><input placeholder="中文" tabindex="1" id="ch" name="name"></form>
+                        <form class="Search"><input placeholder="En" tabindex="1" type="text" id="en"></form>
+                        <form class="Search"><input placeholder="Jp" tabindex="1" type="text" id="jp"></form>
+                        <button style="text-align: center" type="button" class="Suggestions" id="checkin"> 确认 </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    var myCh;
+    var myEn;
+    var myJp;
+    $(document).ready(function() {
+        $("#checkin").click(function() { //入住按钮点击后
+            myCh=document.getElementById("ch").innerHTML;
+            myEn=document.getElementById("en").innerHTML;
+            myJp=document.getElementById("jp").innerHTML;
+
+            $.ajax({
+                url: "http://127.0.0.1:8080/search",
+                type: "GET",
+                data: {
+                    "ch":myCh,
+                    "en":myEn,
+                    "jp":myJp
+                },
+                success: function(result) {
+                    // alert("success");
+                    if (result.code == 200) {
+                        alert("测试成功");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("error");
+                }
+            })
+
+        })
+    })
+</script>
+
+
+</html>
