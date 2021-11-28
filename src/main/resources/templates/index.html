@@ -27,9 +27,11 @@
                         </div>
                     </div>
                     <div class="Widget " style="font-size: 24px;">
-                        <form class="Search"><input placeholder="中文" tabindex="1" id="ch" name="name"></form>
-                        <form class="Search"><input placeholder="En" tabindex="1" type="text" id="en"></form>
-                        <form class="Search"><input placeholder="Jp" tabindex="1" type="text" id="jp"></form>
+                        <form class="Search">
+                            <input placeholder="中文" tabindex="1" type="text" id="ch" name="ch">
+                            <input placeholder="En" tabindex="1" type="text" id="en" name="en">
+                            <input placeholder="Jp" tabindex="1" type="text" id="jp" name="jp">
+                        </form>
                         <button style="text-align: center" type="button" class="Suggestions" id="checkin"> 确认 </button>
                     </div>
                 </div>
@@ -40,25 +42,24 @@
 </body>
 
 <script>
-    var myCh;
-    var myEn;
-    var myJp;
+
+
+
     $(document).ready(function() {
         $("#checkin").click(function() { //入住按钮点击后
-            myCh=document.getElementById("ch").innerHTML;
-            myEn=document.getElementById("en").innerHTML;
-            myJp=document.getElementById("jp").innerHTML;
-
+            var fields = $('.Search').serializeArray();
+            var obj = {}; //声明一个对象
+            $.each(fields, function(index, field) {
+                obj[field.name] = field.value; //通过变量，将属性值，属性一起放到对象中
+            });
             $.ajax({
+                type: "post",
                 url: "http://127.0.0.1:8080/search",
-                type: "GET",
-                data: {
-                    "ch":myCh,
-                    "en":myEn,
-                    "jp":myJp
-                },
+                async: true,
+                contentType: 'application/json',
+                dataType: 'JSON',
+                data: JSON.stringify(obj),//将对象转为json字符串
                 success: function(result) {
-                    // alert("success");
                     if (result.code == 200) {
                         alert("测试成功");
                     }
@@ -66,7 +67,27 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     alert("error");
                 }
-            })
+
+            });
+
+            // $.ajax({
+            //     url: "http://127.0.0.1:8080/search",
+            //     type: "GET",
+            //     data: {
+            //         "ch":myCh,
+            //         "en":myEn,
+            //         "jp":myJp
+            //     },
+            //     success: function(result) {
+            //         // alert("success");
+            //         if (result.code == 200) {
+            //             alert("测试成功");
+            //         }
+            //     },
+            //     error: function(jqXHR, textStatus, errorThrown) {
+            //         alert("error");
+            //     }
+            // })
 
         })
     })

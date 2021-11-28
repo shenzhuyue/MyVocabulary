@@ -9,9 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.hibernate.loader.plan.spi.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Classname wordController
@@ -31,9 +29,10 @@ public class wordController {
         this.wordRepository=wordRepository;
     }
     @Operation(method = "GET",description = "查找")
-    @GetMapping("/search")
-    public Result<?> search(@Parameter String en){
+    @PostMapping("/search")
+    public Result<?> search(@RequestParam(value = "ch",required = false) String ch,@RequestParam(value = "en",required = false) String en,@RequestParam(value = "jp",required = false) String jp){
         word curWord=wordRepository.findAllByEn(en);
+        System.out.println(curWord);
         return Result.ok(curWord);
     }
 }
