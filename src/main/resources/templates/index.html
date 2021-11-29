@@ -61,7 +61,7 @@
                 data: JSON.stringify(obj),//将对象转为json字符串
                 success: function(result) {
                     if (result.code == 200) {
-                        alert("测试成功");
+                        alert(result.message);
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
