@@ -2,15 +2,14 @@ package erii.erii.controller;
 
 import erii.erii.common.Result;
 import erii.erii.common.SearchFromYoudao;
-import erii.erii.entity.word;
 import erii.erii.repo.WordRepository;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.hibernate.loader.plan.spi.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.Map;
@@ -29,6 +28,7 @@ import java.util.Map;
 @CrossOrigin
 @Configuration
 @Tag(name = "paymentAPI",description = "payment的controller接口。")
+
 @RestController
 public class wordController {
     @Autowired
@@ -45,4 +45,5 @@ public class wordController {
         String res= SearchFromYoudao.mySearch(map.get("en"),"en","zh-CHS");
         return Result.ok(res);
     }
+
 }
