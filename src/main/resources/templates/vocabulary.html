@@ -46,6 +46,12 @@
 
 
     $(document).ready(function() {
+        alert("这个小项目的初衷是因为我在背英语单词的时侯突然想到是不是可以同时学习英语和日语，" +
+            "于是就有了设计这样一个这个项目的想法。" +
+            "遇到的问题来说有3点吧。" +
+            "一是我希望这个项目能够部署到服务器上，于是我学习了服务器相关的知识，也算是对服务器有了一定的了解。" +
+            "二是我发现想要实现这样一个项目需要词库的支持，而我暂时没有找到相关的资源。所以就是暂时使用有道翻译当作词库了哈哈。。。" +
+            "三是前端ui相关的一些知识此前没有过多的了解(比如jquery)，也借着这次机会更多的学习了一下相关的知识。")
         $("#checkin").click(function() { //入住按钮点击后
             var fields = $('.Search').serializeArray();
             var obj = {}; //声明一个对象
@@ -54,21 +60,144 @@
             });
             $.ajax({
                 type: "post",
-                url: "http://121.40.83.129:1001/search",
+                // url: "http://121.40.83.129:1001/search",
+                url: "http://127.0.0.1:1001/searchCh",
                 async: true,
                 contentType: 'application/json',
                 dataType: 'JSON',
                 data: JSON.stringify(obj),//将对象转为json字符串
-                success: function(result) {
-                    if (result.code == 200) {
-                        alert(result.message);
+                success:function (data) {
+                    var result="";
+                    if (data.translation != null) {
+                        for (var m = 0; m < data.translation.length; m++) {
+                            result +=data.translation[m];
+                        }
+                        $("#ch").val(result);
                     }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert("error");
+                    $.ajax({
+                        type: "post",
+                        // url: "http://121.40.83.129:1001/search",
+                        url: "http://127.0.0.1:1001/searchJp",
+                        async: true,
+                        contentType: 'application/json',
+                        dataType: 'JSON',
+                        data: JSON.stringify(obj),//将对象转为json字符串
+                        success:function (data) {
+                            var result="";
+                            if (data.translation != null) {
+                                for (var m = 0; m < data.translation.length; m++) {
+                                    result +=data.translation[m];
+                                }
+                                $("#jp").val(result);
+                            }
+                        }
+                    });
                 }
-
             });
+
+
+//================================================================================
+            //
+            // function() {
+            //     var q = $('#inputText').val();
+            //     // var lan = $(".on a").attr("val");
+            //     if (q.length <= 0) {
+            //         Toast.toast('请输入内容');
+            //         return;
+            //     }
+            //     if (q.length > 1000) {
+            //         Toast.toast('体验翻译字数上限1000');
+            //         return;
+            //     }
+            //     var lan = $('#customSelectVal').val();
+            //     var lans = lan.split('2');
+            //     var from = 'Auto';
+            //     var to = 'Auto';
+            //     if (lans.length == 2) {
+            //         from = lans[0];
+            //         to = lans[1];
+            //     }
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: 'https://aidemo.youdao.com/trans',
+            //         data: {
+            //             q: q,
+            //             from: from,
+            //             to: to
+            //         },
+            //         success: function(data) {
+            //             if (data.errorCode != 0) {
+            //                 if (data.errorCode == 411) {
+            //                     Toast.toast('您的访问过于频繁，请稍后访问');
+            //                     return;
+            //                 } else if (data.errorCode == 413) {
+            //                     Toast.toast('您的访问已达到上限');
+            //                     return;
+            //                 } else if (data.errorCode == 103) {
+            //                     Toast.toast('体验的翻译长度请保持在1000字符以内');
+            //                     return;
+            //                 } else if (data.errorCode == 113) {
+            //                     Toast.toast('查询不能为空');
+            //                     return;
+            //                 } else if (data.errorCode == 410) {
+            //                     Toast.toast('您的访问过于频繁，请稍后访问');
+            //                 }
+            //             }
+            //             var result;
+            //             if (data.translation != null) {
+            //                 var translation = '';
+            //
+            //                 for (var m = 0; m < data.translation.length; m++) {
+            //                     translation +=
+            //                         data.translation[m].replace('\n', '<br/>') + '<br/>';
+            //                 }
+            //                 result =
+            //                     '<div id="trans_result" class="translated_result"><p class="tgt">' +
+            //                     translation +
+            //                     '</p></div>';
+            //                 if (translation.length > 300) {
+            //                     $('#outputText').addClass('small_font');
+            //                 } else {
+            //                     $('#outputText').removeClass('small_font');
+            //                 }
+            //             }
+            //             //                var name = data.l;
+            //             //
+            //             //                var value = $("#customSelectOption").find("a[val="+name+"]").text();
+            //             //                alert(name +":"+value );
+            //             //                $("#customSelectBtnText").text(value);
+            //             if (data.basic != null) {
+            //                 var explians = data.basic.explains;
+            //                 result +=
+            //                     '<div class="smart_result"><div class="smart_src_title">来自有道词典结果</div>';
+            //                 for (var i = 0; i < explians.length; i++) {
+            //                     result += '<p>' + explians[i] + '</p>';
+            //                 }
+            //                 result +=
+            //                     '<a class="smartresult_more" id="resultMore" href="http://dict.youdao.com/search?q=' +
+            //                     data.query +
+            //                     '&amp;keyfrom=zhiyun" target="_blank">查看完整结果»</a></div>';
+            //             }
+            //             $('#outputText').html(result);
+            //             var fontsize = $('#inputText').css('font-size');
+            //             $('#outputText .tgt').css('font-size', fontsize);
+            //             $('#translated').show();
+            //         },
+            //         dataType: 'json',
+            //     });
+            // }
+
+
+
+//=========================================================================
+            // success: function(result) {
+            //     if (result.code == 200) {
+            //         alert(result.result.translation);
+            //     }
+            // },
+            // error: function(jqXHR, textStatus, errorThrown) {
+            //     alert("error");
+            // }
 
             // $.ajax({
             //     url: "http://127.0.0.1:8080/search",
@@ -95,3 +224,4 @@
 
 
 </html>
+

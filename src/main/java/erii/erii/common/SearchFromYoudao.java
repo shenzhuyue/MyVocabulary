@@ -98,7 +98,6 @@ public class SearchFromYoudao {
                 String json = EntityUtils.toString(httpEntity,"UTF-8");
                 EntityUtils.consume(httpEntity);
                 logger.info(json);
-                System.out.println(json);
                 return json;
             }
         }finally {

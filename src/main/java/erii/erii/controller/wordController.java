@@ -1,10 +1,15 @@
 package erii.erii.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import erii.erii.common.Result;
 import erii.erii.common.SearchFromYoudao;
+import erii.erii.common.YoudaoResult;
 import erii.erii.repo.WordRepository;
+import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.Model;
@@ -30,20 +35,25 @@ import java.util.Map;
 @Tag(name = "paymentAPI",description = "payment的controller接口。")
 
 @RestController
+
 public class wordController {
     @Autowired
     WordRepository wordRepository;
     public wordController(WordRepository wordRepository){
         this.wordRepository=wordRepository;
     }
-    @Operation(method = "GET",description = "查找")
-    @PostMapping("/search")
-    public Result<?> search(@RequestBody Map<String,String> map) throws IOException {
+    @Operation(method = "POST",description = "查找CH")
+    @PostMapping("/searchCh")
+    public String searchCh(@RequestBody Map<String,String> map) throws IOException {
+        String enToCh= SearchFromYoudao.mySearch(map.get("en"),"en","zh-CHS");
+        return enToCh;
+    }
 
-        System.out.println(map.get("en"));
-
-        String res= SearchFromYoudao.mySearch(map.get("en"),"en","zh-CHS");
-        return Result.ok(res);
+    @Operation(method = "POST",description = "查找Jp")
+    @PostMapping("/searchJp")
+    public String searchJp(@RequestBody Map<String,String> map) throws IOException {
+        String enToJa= SearchFromYoudao.mySearch(map.get("en"),"en","ja");
+        return enToJa;
     }
 
 }
