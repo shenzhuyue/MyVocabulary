@@ -42,17 +42,8 @@
 </body>
 
 <script>
-
-
-
     $(document).ready(function() {
-        alert("这个小项目的初衷是因为我在背英语单词的时侯突然想到是不是可以同时学习英语和日语，" +
-            "于是就有了设计这样一个这个项目的想法。" +
-            "遇到的问题来说有3点吧。" +
-            "一是我希望这个项目能够部署到服务器上，于是我学习了服务器相关的知识，也算是对服务器有了一定的了解。" +
-            "二是我发现想要实现这样一个项目需要词库的支持，而我暂时没有找到相关的资源。所以就是暂时使用有道翻译当作词库了哈哈。。。" +
-            "三是前端ui相关的一些知识此前没有过多的了解(比如jquery)，也借着这次机会更多的学习了一下相关的知识。")
-        $("#checkin").click(function() { //入住按钮点击后
+        $("#checkin").click(function() {
             var fields = $('.Search').serializeArray();
             var obj = {}; //声明一个对象
             $.each(fields, function(index, field) {
@@ -60,8 +51,8 @@
             });
             $.ajax({
                 type: "post",
-                // url: "http://121.40.83.129:1001/search",
-                url: "http://127.0.0.1:1001/searchCh",
+                url: "http://121.40.83.129:1001/searchCh",
+                // url: "http://127.0.0.1:1001/searchCh",
                 async: true,
                 contentType: 'application/json',
                 dataType: 'JSON',
@@ -76,8 +67,8 @@
                     }
                     $.ajax({
                         type: "post",
-                        // url: "http://121.40.83.129:1001/search",
-                        url: "http://127.0.0.1:1001/searchJp",
+                        url: "http://121.40.83.129:1001/searchJp",
+                        // url: "http://127.0.0.1:1001/searchJp",
                         async: true,
                         contentType: 'application/json',
                         dataType: 'JSON',
