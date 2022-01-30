@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class pageController {
-    @RequestMapping({"/vocabulary"})
+    @RequestMapping({"/","/vocabulary"})
     public String indexVocabulary() {
         return "vocabulary";
     }
