@@ -23,12 +23,7 @@ import java.security.NoSuchAlgorithmException;
 
 import java.util.*;
 
-/**
- * @Classname SearchFromYoudao
- * @Description TODO
- * @Date 2021/11/29 23:39
- * @Created by Administrator
- */
+
 
 
 
@@ -137,32 +132,6 @@ public class SearchFromYoudao {
         } catch (NoSuchAlgorithmException e) {
             return null;
         }
-    }
-
-    /**
-     *
-     * @param result 音频字节流
-     * @param file 存储路径
-     */
-    private static void byte2File(byte[] result, String file) {
-        File audioFile = new File(file);
-        FileOutputStream fos = null;
-        try{
-            fos = new FileOutputStream(audioFile);
-            fos.write(result);
-
-        }catch (Exception e){
-            logger.info(e.toString());
-        }finally {
-            if(fos != null){
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
     }
 
     public static String truncate(String q) {
