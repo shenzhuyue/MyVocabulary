@@ -19,9 +19,9 @@ import java.util.Map;
  * @Created by Administrator
  */
 public class test {
-    public static void main(String[] args) {
-        get();
-    }
+//     public static void main(String[] args) {
+//         get();
+//     }
     private static void get() {
 
 
